@@ -16,18 +16,18 @@
   <div th:insert="blocks/sign :: sign"></div>
 
 
-  <div class="row">
-    <div class="col-1"></div>
-    <div class="blocks-menu col-10">
-      <a href="/">
-        <img class="mb-3 mt-3" width="100%" th:src="@{img/block1.png}">
-      </a>
-      <a href="/films">
-        <img class="mb-3" width="100%" th:src="@{img/block2withcursor.png}">
-      </a>
-      <img width="100%" th:src="@{img/block3.png}">
+  <div class="album py-4 bg-body-tertiary">
+    <div class="container">
+        <div class="blocks-menu">
+          <a href="/">
+            <img class="mb-4 border shadow rounded" width="100%" th:src="@{img/block1.png}">
+          </a>
+          <a href="/films">
+            <img class="mb-4 border shadow rounded" width="100%" th:src="@{img/block2withcursor.png}">
+          </a>
+          <img class="shadow border rounded" width="100%" th:src="@{img/block3.png}">
+        </div>
     </div>
-    <div class="col-1"></div>
   </div>
 
   <div th:insert="blocks/footer :: footer"></div>
