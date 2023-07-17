@@ -1,5 +1,5 @@
 INSERT INTO files(name, path)
-VALUES('good_omens_2019.jpg', 'src/main/resources/files/good_omens_2019.jpg');
+VALUES('wonder_woman_2017.jpg', 'src/main/resources/files/wonder_woman_2017.jpg');
 
 INSERT INTO files(name, path)
 VALUES('once_upon_a_time_in_hollywood_2019.jpg', 'src/main/resources/files/once_upon_a_time_in_hollywood_2019.jpg');
