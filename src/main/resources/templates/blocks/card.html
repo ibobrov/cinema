@@ -1,19 +1,22 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:fragment="card">
-  <div class="col">
-    <div class="card shadow-sm">
-      <svg class="bd-placeholder-img card-img-top" width="100%" height="450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></svg>
-      <div class="card-body">
-        <p class="card-text">
-        <ul>
-          <li>Minutes</li>
-          <li>Horror</li>
-          <li>16+ age</li>
-        </ul>
-        </p>
-        <div class="d-flex justify-content-center align-items-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary">about</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">ticket</button>
+  <div th:each="card: ${cards}">
+    <div class="col">
+      <div class="card shadow-sm">
+        <img class="bd-placeholder-img card-img-top" width="100%" height="100%" th:src="@{/files/{fileId}(fileId=${card.fileId})}">
+        <div class="card-body">
+          <p class="card-text">
+          <ul>
+            <h4 th:text="${card.name}"></h4>
+            <li>Duration : <a th:text="${card.durationInMinutes}"></a> min</li>
+            <li>Genre : <a th:text="${card.genre}"></a></li>
+            <li>Age : <a th:text="${card.minimalAge}"></a> years</li>
+          </ul>
+          </p>
+          <div class="d-flex justify-content-center align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary">about</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">ticket</button>
+            </div>
           </div>
         </div>
       </div>
