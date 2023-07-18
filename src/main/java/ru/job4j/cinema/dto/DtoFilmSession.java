@@ -14,6 +14,9 @@ public class DtoFilmSession {
     private LocalDateTime endTime;
     private int price;
 
+    public DtoFilmSession() {
+    }
+
     public DtoFilmSession(FilmSession filmSession, Film film, Hall hall) {
         this.id = filmSession.getId();
         this.film = film;

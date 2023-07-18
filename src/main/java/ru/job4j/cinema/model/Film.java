@@ -22,6 +22,20 @@ public class Film {
     private int durationInMinutes;
     private int fileId;
 
+    public Film() {
+    }
+
+    public Film(int id, String name, String description, int year, int genreId, int minimalAge, int durationInMinutes, int fileId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.year = year;
+        this.genreId = genreId;
+        this.minimalAge = minimalAge;
+        this.durationInMinutes = durationInMinutes;
+        this.fileId = fileId;
+    }
+
     public int getId() {
         return id;
     }
@@ -94,9 +108,7 @@ public class Film {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Film film = (Film) o;
-
         return id == film.id;
     }
 

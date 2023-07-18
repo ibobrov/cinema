@@ -1,4 +1,4 @@
-INSERT INTO films(name, description, year, genre_id, minimal_age, duration_in_minutes, file_id)
+INSERT INTO films(name, description, "year", genre_id, minimal_age, duration_in_minutes, file_id)
 VALUES('Wonder Women',
        'When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny.',
        2017, 2, 6, 141, 1),
