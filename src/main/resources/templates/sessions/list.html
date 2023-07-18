@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+  <link th:href="@{/css/bootstrap.5.3.0/bootstrap.css}" rel="stylesheet">
+  <script th:src="@{/js/popper.2.11.8.umd/popper.min.js}"></script>
+  <script th:src="@{/js/bootstrap.5.3.0/bootstrap.min.js}"></script>
+  <title>Filmography</title>
+</head>
+<body>
+<div class="container-fluid p-0">
+
+  <div th:insert="blocks/header :: header"></div>
+  <div th:insert="blocks/login :: login"></div>
+  <div th:insert="blocks/sign :: sign"></div>
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <main>
+        <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Today</h4>
+              </div>
+              <div class="card-body">
+
+                <div class="bd-example-snippet bd-code-snippet">
+                  <div class="bd-example m-0 border-0">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                        <th scope="col">Hall</th>
+                        <th scope="col">Start - End</th>
+                        <th scope="col">Film</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>10:00-12:00</td>
+                        <td><a href="">Wonder Women</a></td>
+                        <td>5$</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>12:00-14:00</td>
+                        <td><a href="">Back to the Future Part II</a></td>
+                        <td>$6</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>14:00-16:00</td>
+                        <td><a href="">Wonder Women</a></td>
+                        <td>$10</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>16:00-18:00</td>
+                        <td><a href="">Annihilation</a></td>
+                        <td>$12</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>18:00-20:00</td>
+                        <td><a href="">Once Upon a Time in... Hollywood</a></td>
+                        <td>$16</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Yesterday</h4>
+              </div>
+              <div class="card-body">
+
+                <div class="bd-example-snippet bd-code-snippet">
+                  <div class="bd-example m-0 border-0">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                        <th scope="col">Hall</th>
+                        <th scope="col">Start - End</th>
+                        <th scope="col">Film</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>10:00-12:00</td>
+                        <td><a href="">Back to the Future Part II</a></td>
+                        <td>5$</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>12:00-14:00</td>
+                        <td><a href="">Wonder Women</a></td>
+                        <td>$6</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>14:00-16:00</td>
+                        <td><a href="">Back to the Future Part II</a></td>
+                        <td>$10</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>16:00-18:00</td>
+                        <td><a href="">Once Upon a Time in... Hollywood</a></td>
+                        <td>$12</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>18:00-20:00</td>
+                        <td><a href="">Annihilation</a></td>
+                        <td>$16</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+
+
+  <div th:insert="blocks/footer :: footer"></div>
+</div>
+</body>
+</html>
