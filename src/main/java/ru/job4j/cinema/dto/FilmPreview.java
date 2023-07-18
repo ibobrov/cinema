@@ -1,6 +1,6 @@
 package ru.job4j.cinema.dto;
 
-public class FilmCard {
+public class FilmPreview {
     private int filmId;
     private String name;
     private int minimalAge;
@@ -8,10 +8,10 @@ public class FilmCard {
     private String genre;
     private int fileId;
 
-    public FilmCard() {
+    public FilmPreview() {
     }
 
-    public FilmCard(int filmId, String name, int minimalAge, int durationInMinutes, String genre, int fileId) {
+    public FilmPreview(int filmId, String name, int minimalAge, int durationInMinutes, String genre, int fileId) {
         this.filmId = filmId;
         this.name = name;
         this.minimalAge = minimalAge;

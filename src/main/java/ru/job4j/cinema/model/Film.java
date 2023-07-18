@@ -8,7 +8,7 @@ public class Film {
             "name", "name",
             "description", "description",
             "year", "year",
-            "genre", "genre",
+            "genre_id", "genreId",
             "minimal_age", "minimalAge",
             "duration_in_minutes", "durationInMinutes",
             "file_id", "fileId"
@@ -17,7 +17,7 @@ public class Film {
     private String name;
     private String description;
     private int year;
-    private String genre;
+    private int genreId;
     private int minimalAge;
     private int durationInMinutes;
     private int fileId;
@@ -54,12 +54,12 @@ public class Film {
         this.year = year;
     }
 
-    public String getGenre() {
-        return genre;
+    public int getGenreId() {
+        return genreId;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenreId(int genreId) {
+        this.genreId = genreId;
     }
 
     public int getMinimalAge() {
