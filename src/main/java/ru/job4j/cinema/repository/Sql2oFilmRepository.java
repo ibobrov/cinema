@@ -19,10 +19,9 @@ public class Sql2oFilmRepository implements FilmRepository {
     public Optional<Film> findById(int id) {
         try (var connection = sql2o.open()) {
             var sql = """
-                      SELECT films.id, films.name, films.description, films.year, genres.name AS genre,
-                             films.minimal_age, films.duration_in_minutes, films.file_id
+                      SELECT id, name, description, "year", genre_id,
+                             minimal_age, duration_in_minutes, file_id
                       FROM films
-                      JOIN genres ON genres.id = films.genre_id
                       WHERE films.id = :id;
                       """;
             var query = connection.createQuery(sql);
@@ -37,7 +36,7 @@ public class Sql2oFilmRepository implements FilmRepository {
     public List<Film> getAll() {
         try (var connection = sql2o.open()) {
             var sql = """
-                    SELECT id, name, description, year, genre_id, minimal_age, 
+                    SELECT id, name, description, "year", genre_id, minimal_age, 
                            duration_in_minutes, file_id
                     FROM films
                     """;

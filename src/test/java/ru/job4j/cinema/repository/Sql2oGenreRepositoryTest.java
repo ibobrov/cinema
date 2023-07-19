@@ -3,7 +3,7 @@ package ru.job4j.cinema.repository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
-import ru.job4j.cinema.model.Hall;
+import ru.job4j.cinema.model.Genre;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -11,14 +11,14 @@ import java.util.Properties;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class Sql2oHallRepositoryTest {
-    private static Sql2oHallRepository hallRepo;
+class Sql2oGenreRepositoryTest {
+    private static Sql2oGenreRepository genreRepo;
 
     @BeforeAll
     public static void initRepository() throws IOException {
         var properties = new Properties();
-        try (var inputStream = Sql2oHallRepositoryTest.class.getClassLoader()
-                .getResourceAsStream("connection.properties")) {
+        try (var inputStream = Sql2oHallRepositoryTest.class.getClassLoader().
+                getResourceAsStream("connection.properties")) {
             properties.load(inputStream);
         }
         var configuration = new DatasourceConfiguration();
@@ -28,26 +28,25 @@ class Sql2oHallRepositoryTest {
                 properties.getProperty("datasource.password")
         );
         var sql2o = configuration.databaseClient(datasource);
-        hallRepo = new Sql2oHallRepository(sql2o);
+        genreRepo = new Sql2oGenreRepository(sql2o);
     }
 
     @Test
-    public void whenFindByReturnHall() {
-        var expected = new Hall(2, "Hall 2", 20, 10,
-                "Large room with seats made of soft and comfortable upholstery.");
-        var actual = hallRepo.findById(2).get();
+    public void whenFindByReturnGenre() {
+        var expected = new Genre(2, "Adventure");
+        var actual = genreRepo.findById(2).get();
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
     @Test
     public void whenFindByReturnEmpty() {
-        assertThat(hallRepo.findById(-1)).isEqualTo(empty());
+        assertThat(genreRepo.findById(-1)).isEqualTo(empty());
     }
 
     @Test
     public void whenGetAll() {
-        assertThat(hallRepo.getAll().size()).isEqualTo(3);
-        assertThat(hallRepo.findById(1).get().getName()).isEqualTo("Hall 1");
-        assertThat(hallRepo.findById(3).get().getName()).isEqualTo("Vip room");
+        assertThat(genreRepo.getAll().size()).isEqualTo(5);
+        assertThat(genreRepo.findById(1).get().getName()).isEqualTo("Thriller");
+        assertThat(genreRepo.findById(3).get().getName()).isEqualTo("Science fiction");
     }
 }

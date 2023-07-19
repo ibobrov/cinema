@@ -3,7 +3,7 @@ package ru.job4j.cinema.repository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
-import ru.job4j.cinema.model.Hall;
+import ru.job4j.cinema.model.Film;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -11,8 +11,8 @@ import java.util.Properties;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class Sql2oHallRepositoryTest {
-    private static Sql2oHallRepository hallRepo;
+class Sql2oFilmRepositoryTest {
+    private static Sql2oFilmRepository filmRepo;
 
     @BeforeAll
     public static void initRepository() throws IOException {
@@ -28,26 +28,28 @@ class Sql2oHallRepositoryTest {
                 properties.getProperty("datasource.password")
         );
         var sql2o = configuration.databaseClient(datasource);
-        hallRepo = new Sql2oHallRepository(sql2o);
+        filmRepo = new Sql2oFilmRepository(sql2o);
     }
 
     @Test
-    public void whenFindByReturnHall() {
-        var expected = new Hall(2, "Hall 2", 20, 10,
-                "Large room with seats made of soft and comfortable upholstery.");
-        var actual = hallRepo.findById(2).get();
-        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    public void whenFindByReturnFilm() {
+        var expectedFilm = new Film(1, "Wonder Women",
+                "When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian"
+                        + " warrior in training, leaves home to fight a war, discovering her full powers and true"
+                        + " destiny.", 2017, 2, 6, 141, 1);
+        var actualFilm = filmRepo.findById(1);
+        assertThat(actualFilm.get()).usingRecursiveComparison().isEqualTo(expectedFilm);
     }
 
     @Test
     public void whenFindByReturnEmpty() {
-        assertThat(hallRepo.findById(-1)).isEqualTo(empty());
+        assertThat(filmRepo.findById(-1)).isEqualTo(empty());
     }
 
     @Test
     public void whenGetAll() {
-        assertThat(hallRepo.getAll().size()).isEqualTo(3);
-        assertThat(hallRepo.findById(1).get().getName()).isEqualTo("Hall 1");
-        assertThat(hallRepo.findById(3).get().getName()).isEqualTo("Vip room");
+        assertThat(filmRepo.getAll().size()).isEqualTo(6);
+        assertThat(filmRepo.findById(3).get().getName()).isEqualTo("Annihilation");
+        assertThat(filmRepo.findById(6).get().getName()).isEqualTo("Jaws");
     }
 }

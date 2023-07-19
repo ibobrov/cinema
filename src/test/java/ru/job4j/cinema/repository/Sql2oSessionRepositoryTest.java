@@ -3,16 +3,17 @@ package ru.job4j.cinema.repository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
-import ru.job4j.cinema.model.Hall;
+import ru.job4j.cinema.model.FilmSession;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class Sql2oHallRepositoryTest {
-    private static Sql2oHallRepository hallRepo;
+class Sql2oSessionRepositoryTest {
+    private static Sql2oSessionRepository sessionRepo;
 
     @BeforeAll
     public static void initRepository() throws IOException {
@@ -28,26 +29,28 @@ class Sql2oHallRepositoryTest {
                 properties.getProperty("datasource.password")
         );
         var sql2o = configuration.databaseClient(datasource);
-        hallRepo = new Sql2oHallRepository(sql2o);
+        sessionRepo = new Sql2oSessionRepository(sql2o);
     }
 
     @Test
-    public void whenFindByReturnHall() {
-        var expected = new Hall(2, "Hall 2", 20, 10,
-                "Large room with seats made of soft and comfortable upholstery.");
-        var actual = hallRepo.findById(2).get();
+    public void whenFindByReturnGenre() {
+        var expected = new FilmSession(13, 3, 1,
+                LocalDateTime.of(2023, 7, 19, 10, 0),
+                LocalDateTime.of(2023, 7, 19, 11, 55),
+                5);
+        var actual = sessionRepo.findById(13).get();
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
     @Test
     public void whenFindByReturnEmpty() {
-        assertThat(hallRepo.findById(-1)).isEqualTo(empty());
+        assertThat(sessionRepo.findById(-1)).isEqualTo(empty());
     }
 
     @Test
     public void whenGetAll() {
-        assertThat(hallRepo.getAll().size()).isEqualTo(3);
-        assertThat(hallRepo.findById(1).get().getName()).isEqualTo("Hall 1");
-        assertThat(hallRepo.findById(3).get().getName()).isEqualTo("Vip room");
+        assertThat(sessionRepo.getAll().size()).isEqualTo(24);
+        assertThat(sessionRepo.findById(7).get().getFilmId()).isEqualTo(3);
+        assertThat(sessionRepo.findById(19).get().getFilmId()).isEqualTo(5);
     }
 }
