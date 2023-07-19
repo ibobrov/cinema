@@ -26,8 +26,8 @@ public class SimpleFilmPreviewService implements FilmPreviewService {
     }
 
     @Override
-    public Collection<FilmPreview> findAll() {
-        Collection<FilmPreview> rsl = new ArrayList<>();
+    public List<FilmPreview> getAll() {
+        List<FilmPreview> rsl = new ArrayList<>();
         Map<Integer, String> genres = getAllGenre();
         for (var film : filmRepository.getAll()) {
             rsl.add(toPreview(film, genres.get(film.getGenreId())));

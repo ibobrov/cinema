@@ -17,7 +17,7 @@ public class FilmController {
 
     @GetMapping("/list")
     public String getAll(Model model) {
-        model.addAttribute("cards", filmPreviewService.findAll());
+        model.addAttribute("cards", filmPreviewService.getAll());
         return "films/list";
     }
 }
