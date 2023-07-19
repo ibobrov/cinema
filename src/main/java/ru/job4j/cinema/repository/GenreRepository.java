@@ -7,10 +7,6 @@ import java.util.Optional;
 
 public interface GenreRepository {
 
-    Genre save(Genre genre);
-
-    boolean delete(int id);
-
     Optional<Genre> findById(int id);
 
     List<Genre> getAll();

@@ -7,10 +7,6 @@ import java.util.Optional;
 
 public interface HallRepository {
 
-    Hall save(Hall hall);
-
-    boolean delete(int id);
-
     Optional<Hall> findById(int id);
 
     List<Hall> getAll();
