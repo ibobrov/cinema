@@ -1,7 +1,6 @@
 package ru.job4j.cinema.dto;
 
 import ru.job4j.cinema.model.Film;
-import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.model.Hall;
 
 import java.time.LocalDateTime;
@@ -17,13 +16,13 @@ public class DtoFilmSession {
     public DtoFilmSession() {
     }
 
-    public DtoFilmSession(FilmSession filmSession, Film film, Hall hall) {
-        this.id = filmSession.getId();
+    public DtoFilmSession(int id, Film film, Hall hall, LocalDateTime startTime, LocalDateTime endTime, int price) {
+        this.id = id;
         this.film = film;
         this.hall = hall;
-        this.startTime = filmSession.getStartTime();
-        this.endTime = filmSession.getEndTime();
-        this.price = filmSession.getPrice();
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
     }
 
     public int getId() {
