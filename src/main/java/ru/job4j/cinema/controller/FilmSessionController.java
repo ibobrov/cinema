@@ -26,10 +26,10 @@ public class FilmSessionController {
     @GetMapping("/list")
     public String getAll(Model model) {
         model.addAttribute("timeFormatter", DateTimeFormatter.ofPattern("HH:m"));
-        var today = sessionService.getSessionsByDay(TODAY);
+        var today = sessionService.getByDay(TODAY);
         today.sort(Comparator.comparing(DtoFilmSession::getStartTime));
         model.addAttribute("todaySessions", today);
-        var tomorrow = sessionService.getSessionsByDay(TOMORROW);
+        var tomorrow = sessionService.getByDay(TOMORROW);
         tomorrow.sort(Comparator.comparing(DtoFilmSession::getStartTime));
         model.addAttribute("tomorrowSessions", tomorrow);
         return "sessions/list";

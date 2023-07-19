@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface FilmSessionService {
 
-    List<DtoFilmSession> getSessionsByDay(LocalDate date);
+    List<DtoFilmSession> getByDay(LocalDate date);
+
+    List<DtoFilmSession> getByFilm(int id);
 }

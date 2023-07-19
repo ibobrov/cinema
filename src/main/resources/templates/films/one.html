@@ -19,37 +19,7 @@
 	<div class="album py-5 bg-body-tertiary">
 		<div class="container">
 
-			<div class="p-4 pb-0 rounded-3 border shadow-lg">
-
-				<div class="row mb-4">
-					<div class="col-md-5 themed-grid-col">
-						<img class="rounded-lg-3" th:src="@{/files/{fileId}(fileId=${film.getFileId()})}" width="100%" alt="poster">
-					</div>
-
-					<div class="col-md-7 themed-grid-col">
-						<div class="row">
-							<div>
-								<h1 class="fw-bold text-center" th:text="${film.name}"></h1>
-								<div class="text-end p-md-4">
-									<span>Year: </span>
-									<span class="text-primary p-1" th:text="${film.year} + ', '"></span>
-									<span>Genre: </span>
-									<span class="text-primary p-1" th:text="${film.getGenre()} + ', '"></span>
-									<span>Minimal age: </span>
-									<span class="text-primary p-1" th:text="${film.minimalAge} + ', '"></span>
-									<span>Duration: </span>
-									<span class="text-primary" th:text="${film.durationInMinutes}"></span>
-								</div>
-							</div>
-							<div class="align-self-end">
-								<div class="lead">
-									<p th:text="${film.description}"></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div th:insert="blocks/filmCard :: filmCard"></div>
 
 		</div>
 	</div>

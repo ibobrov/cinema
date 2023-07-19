@@ -2,12 +2,14 @@ package ru.job4j.cinema.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.dto.DtoFilmSession;
+import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.repository.FilmRepository;
 import ru.job4j.cinema.repository.HallRepository;
 import ru.job4j.cinema.repository.SessionRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -23,22 +25,29 @@ public class SimpleFilmSessionService implements FilmSessionService {
     }
 
     @Override
-    public List<DtoFilmSession> getSessionsByDay(LocalDate date) {
+    public List<DtoFilmSession> getByDay(LocalDate date) {
+        var sessions = sessionRepo.findByDay(date);
+        return toDto(sessions);
+    }
+
+    @Override
+    public List<DtoFilmSession> getByFilm(int id) {
+        var sessions = sessionRepo.findByFilm(id);
+        return toDto(sessions);
+    }
+
+    private List<DtoFilmSession> toDto(Collection<FilmSession> filmSessions) {
         List<DtoFilmSession> rsl = new ArrayList<>();
-        var sessions = sessionRepo.getAll();
-        for (var session : sessions) {
-            var sessionDate = session.getStartTime().toLocalDate();
-            if (sessionDate.equals(date)) {
-                var dto = new DtoFilmSession(
-                        session.getId(),
-                        filmRepo.findById(session.getFilmId()).get(),
-                        hallRepo.findById(session.getHallId()).get(),
-                        session.getStartTime(),
-                        session.getEndTime(),
-                        session.getPrice()
-                );
-                rsl.add(dto);
-            }
+        for (var session : filmSessions) {
+            var dto = new DtoFilmSession(
+                    session.getId(),
+                    filmRepo.findById(session.getFilmId()).get(),
+                    hallRepo.findById(session.getHallId()).get(),
+                    session.getStartTime(),
+                    session.getEndTime(),
+                    session.getPrice()
+            );
+            rsl.add(dto);
         }
         return rsl;
     }
