@@ -37,7 +37,7 @@ public class SimpleFilmPreviewService implements FilmPreviewService {
 
     private static FilmPreview toPreview(Film film, String genre) {
         return new FilmPreview(film.getId(), film.getName(), film.getMinimalAge(),
-                        film.getDurationInMinutes(), genre, film.getFileId());
+                        film.getDurationInMinutes(), genre, film.getFileId(), film.getYear(), film.getDescription());
     }
 
     private String getGenre(int id) {

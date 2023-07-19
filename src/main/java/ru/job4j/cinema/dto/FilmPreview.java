@@ -7,17 +7,21 @@ public class FilmPreview {
     private int durationInMinutes;
     private String genre;
     private int fileId;
+    private int year;
+    private String description;
 
     public FilmPreview() {
     }
 
-    public FilmPreview(int filmId, String name, int minimalAge, int durationInMinutes, String genre, int fileId) {
+    public FilmPreview(int filmId, String name, int minimalAge, int durationInMinutes, String genre, int fileId, int year, String description) {
         this.filmId = filmId;
         this.name = name;
         this.minimalAge = minimalAge;
         this.durationInMinutes = durationInMinutes;
         this.genre = genre;
         this.fileId = fileId;
+        this.year = year;
+        this.description = description;
     }
 
     public int getFilmId() {
@@ -66,5 +70,21 @@ public class FilmPreview {
 
     public void setFileId(int fileId) {
         this.fileId = fileId;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -27,7 +27,9 @@
 								<a th:text="${filmSession.getFilm().name}" th:href="@{/films/{filmId}(filmId=${filmSession.getFilm().id})}"></a>
 							</td>
 							<td>
-								<span th:text="${filmSession.getPrice()}">$</span>
+								<a th:href="@{/sessions/{sessionId}(sessionId=${filmSession.id})}">
+									<span th:text="${filmSession.getPrice()}"></span><span>$</span>
+								</a>
 							</td>
 						</tr>
 						</tbody>

@@ -1,10 +1,10 @@
 package ru.job4j.cinema.dto;
 
-public class FileDto {
+public class DtoFile {
     private String name;
     private byte[] content;
 
-    public FileDto(String name, byte[] content) {
+    public DtoFile(String name, byte[] content) {
         this.name = name;
         this.content = content;
     }
