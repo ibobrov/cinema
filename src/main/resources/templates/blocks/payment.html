@@ -1,0 +1,67 @@
+<div th:fragment="payment">
+  <form>
+    <div class="row col-5 pb-4">
+      <h5 th:text="'Place:'"></h5>
+      <div class="col">
+        <h6 th:text="'Row'"></h6>
+        <select>
+          <option th:each="row : ${rows}" th:value="${row}" th:text="${row}"></option>
+        </select>
+      </div>
+      <div class="col">
+        <h6 th:text="'Place'"></h6>
+        <select>
+          <option th:each="place : ${places}" th:value="${place}" th:text="${place}"></option>
+        </select>
+      </div>
+    </div>
+
+    <h4 class="mb-2">Payment</h4>
+
+    <div class="row gy-2">
+      <div class="col-md-6">
+        <label for="cc-name" class="form-label">Name on card</label>
+        <input type="text" class="form-control" id="cc-name" placeholder="">
+        <small class="text-body-secondary">Full name as displayed on card</small>
+        <div class="invalid-feedback">
+          Name on card is required
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="cc-number" class="form-label">Credit card number</label>
+        <input type="text" class="form-control" id="cc-number" placeholder="">
+        <div class="invalid-feedback">
+          Credit card number is required
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="cc-expiration" class="form-label">Expiration</label>
+        <input type="text" class="form-control" id="cc-expiration" placeholder="">
+        <div class="invalid-feedback">
+          Expiration date required
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="cc-cvv" class="form-label">CVV</label>
+        <input type="text" class="form-control" id="cc-cvv" placeholder="">
+        <div class="invalid-feedback">
+          Security code required
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="row">
+      <div class="col-6">
+        <div class="w-100 btn btn-danger btn-lg" type="button" onclick="window.history.back()">Cancel</div>
+      </div>
+      <div class="col-6">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue</button>
+      </div>
+    </div>
+  </form>
+</div>

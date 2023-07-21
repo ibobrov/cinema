@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SimpleFilmSessionService implements FilmSessionService {
@@ -22,6 +23,12 @@ public class SimpleFilmSessionService implements FilmSessionService {
         this.sessionRepo = sessionRepo;
         this.filmRepo = filmRepo;
         this.hallRepo = hallRepo;
+    }
+
+    @Override
+    public Optional<DtoFilmSession> findById(int id) {
+        Optional<FilmSession> session = sessionRepo.findById(id);
+        return session.map(this::toDto);
     }
 
     @Override
@@ -39,16 +46,18 @@ public class SimpleFilmSessionService implements FilmSessionService {
     private List<DtoFilmSession> toDto(Collection<FilmSession> filmSessions) {
         List<DtoFilmSession> rsl = new ArrayList<>();
         for (var session : filmSessions) {
-            var dto = new DtoFilmSession(
-                    session.getId(),
-                    filmRepo.findById(session.getFilmId()).get(),
-                    hallRepo.findById(session.getHallId()).get(),
-                    session.getStartTime(),
-                    session.getEndTime(),
-                    session.getPrice()
-            );
-            rsl.add(dto);
+            rsl.add(toDto(session));
         }
         return rsl;
+    }
+
+    private DtoFilmSession toDto(FilmSession session) {
+        return new DtoFilmSession(
+                session.getId(),
+                filmRepo.findById(session.getFilmId()).get(),
+                hallRepo.findById(session.getHallId()).get(),
+                session.getStartTime(),
+                session.getEndTime(),
+                session.getPrice());
     }
 }

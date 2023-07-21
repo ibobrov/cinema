@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+	<link th:href="@{/css/bootstrap.5.3.0/bootstrap.css}" rel="stylesheet">
+	<script th:src="@{/js/popper.2.11.8.umd/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.5.3.0/bootstrap.min.js}"></script>
+	<title th:text="'Ticket for film: ' + ${filmSession.getFilm().name}"></title>
+</head>
+<body>
+<div class="container-fluid p-0">
+
+	<div th:insert="blocks/header :: header"></div>
+	<div th:insert="blocks/login :: login"></div>
+	<div th:insert="blocks/sign :: sign"></div>
+
+	<div class="album py-5 bg-body-tertiary">
+		<div class="container">
+
+			<div class="p-2 rounded-3 border shadow-lg">
+				<h2 class="text-center mb-3" th:text="'Ticket: ' + ${filmSession.getStartTime().getDayOfMonth()} + ' ' + ${filmSession.getStartTime().getMonth()} + ' ' + ${filmSession.getStartTime().toLocalTime()} + ', ' + ${filmSession.getFilm().name}"></h2>
+
+				<div class="row p-2">
+					<div class="ps-3 col-lg-7 text-center">
+						<img class="mb-2 border shadow rounded" width="100%" th:src="@{../img/hall.svg}">
+						<span>Schema with available space</span>
+					</div>
+
+					<div class="col-lg-5">
+						<div>
+							<div class="row pb-1">
+								<h5 th:text="'Film:'"></h5>
+								<span th:text="${filmSession.getFilm().name}"></span>
+							</div>
+
+							<div class="row pb-1">
+								<div class="col">
+									<h5 th:text="'Data:'"></h5>
+									<span th:text="${filmSession.getStartTime().getDayOfMonth()} + ' ' + ${filmSession.getStartTime().getMonth()}"></span>
+								</div>
+								<div class="col">
+									<h5 th:text="'Time:'"></h5>
+									<span th:text="${filmSession.getStartTime().toLocalTime()} + '-' + ${filmSession.getEndTime().toLocalTime()}"></span>
+								</div>
+							</div>
+
+							<div class="row pb-1">
+								<div class="col">
+									<h5 th:text="'Hall:'"></h5>
+									<span th:text="${filmSession.getHall().name}"></span>
+								</div>
+								<div class="col">
+									<h5 th:text="'Price:'"></h5>
+									<span th:text="${filmSession.getPrice()} + '$'"></span>
+								</div>
+							</div>
+
+							<div th:insert="blocks/payment :: payment"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div th:insert="blocks/footer :: footer"></div>
+</div>
+</body>
+</html>

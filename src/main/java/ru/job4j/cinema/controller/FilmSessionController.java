@@ -11,9 +11,10 @@ import ru.job4j.cinema.service.FilmSessionService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/session")
+@RequestMapping("/sessions")
 public class FilmSessionController {
     private final FilmSessionService sessionService;
     private static final LocalDate TODAY = LocalDate.of(2023, 7, 18);
@@ -37,7 +38,10 @@ public class FilmSessionController {
 
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
-        //TODO
+        var dto = sessionService.findById(id).get();
+        model.addAttribute("rows", IntStream.range(1, dto.getHall().getRowCount() + 1).toArray());
+        model.addAttribute("places", IntStream.range(1, dto.getHall().getPlaceCount() + 1).toArray());
+        model.addAttribute("filmSession", dto);
         return "sessions/one";
     }
 }
