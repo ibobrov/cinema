@@ -2,10 +2,9 @@ package ru.job4j.cinema.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.cinema.dto.DtoFilmSession;
+import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmSessionService;
 
 import java.time.LocalDate;
@@ -43,5 +42,10 @@ public class FilmSessionController {
         model.addAttribute("places", IntStream.range(1, dto.getHall().getPlaceCount() + 1).toArray());
         model.addAttribute("filmSession", dto);
         return "sessions/one";
+    }
+
+    @PostMapping("/bye")
+    public String bayTicket(@ModelAttribute Ticket ticket, Model model) {
+        return "redirect:/sessions/list";
     }
 }
