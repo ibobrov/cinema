@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+	<link th:href="@{/css/bootstrap.5.3.0/bootstrap.css}" rel="stylesheet">
+	<script th:src="@{/js/popper.2.11.8.umd/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.5.3.0/bootstrap.min.js}"></script>
+	<title>Оплаченный тикет</title>
+</head>
+<body>
+<div class="container-fluid p-0">
+
+	<div th:insert="blocks/header :: header"></div>
+	<div th:insert="blocks/loginModal :: login"></div>
+	<div th:insert="blocks/registerMadal :: sign"></div>
+
+	<div class="album py-5 bg-body-tertiary min-vh-100">
+		<div class="container">
+			<div class="p-4 pb-0 rounded-3 border shadow-lg text-center align-items-center">
+
+				<div class="row">
+					<div class="col-3"></div>
+
+					<div class="col-lg-6">
+						<h2>Ticket paid</h2>
+						<hr>
+						<h3>A check has been sent to your mail.</h3>
+
+						<div class="row">
+							<div class="col-3"></div>
+								<img class="pt-2 pb-5" th:src="@{/img/tickets.png}">
+							<div class="col-3"></div>
+						</div>
+					</div>
+
+					<div class="col-3"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="fixed-bottom bg-white">
+		<footer th:insert="blocks/footer :: footer"></footer>
+	</div>
+</div>
+</body>
+</html>

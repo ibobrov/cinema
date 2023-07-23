@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.cinema.dto.DtoFilmSession;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmSessionService;
+import ru.job4j.cinema.service.TicketService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,11 +17,13 @@ import java.util.stream.IntStream;
 @RequestMapping("/sessions")
 public class FilmSessionController {
     private final FilmSessionService sessionService;
+    private final TicketService ticketService;
     private static final LocalDate TODAY = LocalDate.of(2023, 7, 18);
     private static final LocalDate TOMORROW = LocalDate.of(2023, 7, 19);
 
-    public FilmSessionController(FilmSessionService sessionService) {
+    public FilmSessionController(FilmSessionService sessionService, TicketService ticketService) {
         this.sessionService = sessionService;
+        this.ticketService = ticketService;
     }
 
     @GetMapping("/list")
@@ -46,6 +49,10 @@ public class FilmSessionController {
 
     @PostMapping("/bye")
     public String bayTicket(@ModelAttribute Ticket ticket, Model model) {
-        return "redirect:/sessions/list";
+        var optionalTicket = ticketService.save(ticket);
+        if (optionalTicket.isEmpty()) {
+            //TODO
+        }
+        return "sessions/paid";
     }
 }

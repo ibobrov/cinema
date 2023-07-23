@@ -26,8 +26,10 @@ public class SimpleTicketService implements TicketService {
         if (session.isPresent()) {
             var hall = hallRepo.findById(session.get().getHallId());
             if (hall.isPresent()) {
-                var rowIsValid = hall.get().getPlaceCount() <= ticket.getRowNumber();
-                var placeIsValid = hall.get().getPlaceCount() <= ticket.getPlaceNumber();
+                var rowIsValid = ticket.getRowNumber() > 0
+                        && ticket.getRowNumber() <= hall.get().getRowCount();
+                var placeIsValid = ticket.getPlaceNumber() > 0
+                        && ticket.getPlaceNumber() <= hall.get().getPlaceCount();
                 if (rowIsValid && placeIsValid) {
                     return ticketRepo.save(ticket);
                 }
