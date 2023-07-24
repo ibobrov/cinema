@@ -33,8 +33,12 @@
       <div class="col-6">
         <div class="w-100 btn btn-danger btn-lg" type="button" onclick="window.history.back()">Cancel</div>
       </div>
-      <div class="col-6">
+      <div th:if="${user.id != 0}" class="col-6 text-center">
         <button class="w-100 btn btn-primary btn-lg" type="submit">Continue</button>
+      </div>
+      <div th:if="${user.id == 0}" class="col-6 text-center">
+        <button class="w-100 btn btn-primary btn-lg mb-2" type="submit" disabled>Continue</button>
+        <span class="fw-bold">Authorization required</span>
       </div>
     </div>
   </form>

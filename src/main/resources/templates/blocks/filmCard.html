@@ -9,11 +9,11 @@
 					<h1 class="fw-bold text-center" th:text="${film.name}"></h1>
 					<div class="text-end p-md-4">
 						<span>Year: </span>
-						<span class="text-primary p-1" th:text="${film.year} + ', '"></span>
+						<span class="text-primary p-1" th:text="${film.year}"></span>
 						<span>Genre: </span>
-						<span class="text-primary p-1" th:text="${film.getGenre()} + ', '"></span>
+						<span class="text-primary p-1" th:text="${film.getGenre()}"></span>
 						<span>Age+: </span>
-						<span class="text-primary p-1" th:text="${film.minimalAge} + ', '"></span>
+						<span class="text-primary p-1" th:text="${film.minimalAge}"></span>
 						<span>Duration: </span>
 						<span class="text-primary" th:text="${film.durationInMinutes}"></span>
 					</div>
@@ -55,6 +55,16 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
+			<div class="row container pb-3">
+				<div class="col-3"></div>
+				<div class="col-sm-3 mb-1">
+					<div class="w-100 btn btn-light btn-lg" type="button" onclick="window.history.back()">Back</div>
+				</div>
+				<div class="col-sm-3">
+					<a class="w-100 btn btn-light btn-lg" type="button" href="/">Home</a>
+				</div>
+				<div class="col-3"></div>
 			</div>
 		</div>
 	</div>
