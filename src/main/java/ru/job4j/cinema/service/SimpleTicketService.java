@@ -6,6 +6,7 @@ import ru.job4j.cinema.repository.HallRepository;
 import ru.job4j.cinema.repository.SessionRepository;
 import ru.job4j.cinema.repository.TicketRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +37,10 @@ public class SimpleTicketService implements TicketService {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Ticket> findBySession(int sessionId) {
+        return ticketRepo.findBySession(sessionId);
     }
 }

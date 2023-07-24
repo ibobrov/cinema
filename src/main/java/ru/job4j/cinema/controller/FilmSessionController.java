@@ -4,12 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.cinema.dto.DtoFilmSession;
+import ru.job4j.cinema.dto.HallSchema;
+import ru.job4j.cinema.model.Hall;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.TicketService;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.stream.IntStream;
 
@@ -28,7 +29,6 @@ public class FilmSessionController {
 
     @GetMapping("/list")
     public String getAll(Model model) {
-        model.addAttribute("timeFormatter", DateTimeFormatter.ofPattern("HH:m"));
         var today = sessionService.getByDay(TODAY);
         today.sort(Comparator.comparing(DtoFilmSession::getStartTime));
         model.addAttribute("todaySessions", today);
@@ -40,10 +40,12 @@ public class FilmSessionController {
 
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
-        var dto = sessionService.findById(id).get();
-        model.addAttribute("rows", IntStream.range(1, dto.getHall().getRowCount() + 1).toArray());
-        model.addAttribute("places", IntStream.range(1, dto.getHall().getPlaceCount() + 1).toArray());
-        model.addAttribute("filmSession", dto);
+        var filmSessionDto = sessionService.findById(id).get();
+        var hall = filmSessionDto.getHall();
+        model.addAttribute("rows", IntStream.range(1, hall.getRowCount() + 1).toArray());
+        model.addAttribute("places", IntStream.range(1, hall.getPlaceCount() + 1).toArray());
+        model.addAttribute("filmSession", filmSessionDto);
+        model.addAttribute("schema", createSchema(hall, filmSessionDto.getId()));
         return "sessions/one";
     }
 
@@ -51,8 +53,20 @@ public class FilmSessionController {
     public String bayTicket(@ModelAttribute Ticket ticket, Model model) {
         var optionalTicket = ticketService.save(ticket);
         if (optionalTicket.isEmpty()) {
-            //TODO
+            model.addAttribute("message", "Failed to place an order. "
+                    + "Refresh the ticket purchase page, the seat may be full.");
+            return "errors/error";
         }
         return "sessions/paid";
+    }
+
+    private HallSchema createSchema(Hall hall, int sessionId) {
+        var rows = hall.getRowCount();
+        var places = hall.getPlaceCount();
+        var schema = new HallSchema((rows + "x" + places), rows, places);
+        for (var ticket : ticketService.findBySession(sessionId)) {
+            schema.setValue(ticket.getRowNumber(), ticket.getPlaceNumber(), true);
+        }
+        return schema;
     }
 }

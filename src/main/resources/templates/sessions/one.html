@@ -23,8 +23,14 @@
 				<h2 class="text-center mb-3" th:text="'Ticket: ' + ${filmSession.getStartTime().getDayOfMonth()} + ' ' + ${filmSession.getStartTime().getMonth()} + ' ' + ${filmSession.getStartTime().toLocalTime()} + ', ' + ${filmSession.getFilm().name}"></h2>
 
 				<div class="row p-2">
-					<div class="ps-3 col-lg-7 text-center">
-						<img class="mb-2 border shadow rounded" width="100%" th:src="@{../img/hall.svg}">
+					<div class="ps-3 col-lg-7 text-center align-self-center">
+
+						<div th:if="${schema.name == '5x5'}" th:insert="schemes/5x5 :: 5x5"></div>
+						<div th:if="${schema.name == '10x20'}" th:insert="schemes/10x20 :: 10x20"></div>
+						<div th:if="${schema.name != '5x5' && schema.name != '10x20'}">
+							<img class="mb-2 border shadow rounded" width="100%" th:src="@{../img/hall.svg}">
+						</div>
+
 						<span>Schema with available space</span>
 					</div>
 
