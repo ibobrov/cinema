@@ -38,7 +38,7 @@ public class Sql2oTicketRepository implements TicketRepository {
     }
 
     @Override
-    public Optional<Ticket> getById(int id) {
+    public Optional<Ticket> findById(int id) {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM tickets WHERE id = :id");
             query.addParameter("id", id);
@@ -52,6 +52,22 @@ public class Sql2oTicketRepository implements TicketRepository {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM tickets WHERE session_id = :id");
             query.addParameter("id", sessionId);
+            return query.setColumnMappings(Ticket.COLUMN_MAPPING).executeAndFetch(Ticket.class);
+        }
+    }
+
+    public boolean delete(int id) {
+        try (var connection = sql2o.open()) {
+            var query = connection.createQuery("DELETE FROM tickets WHERE id = :id");
+            query.addParameter("id", id);
+            var affectedRows = query.executeUpdate().getResult();
+            return affectedRows > 0;
+        }
+    }
+
+    public List<Ticket> getAll() {
+        try (var connection = sql2o.open()) {
+            var query = connection.createQuery("SELECT * FROM tickets");
             return query.setColumnMappings(Ticket.COLUMN_MAPPING).executeAndFetch(Ticket.class);
         }
     }

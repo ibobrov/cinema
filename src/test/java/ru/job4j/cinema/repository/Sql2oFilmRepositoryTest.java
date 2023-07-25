@@ -11,6 +11,10 @@ import java.util.Properties;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * In tests, checks are made to return a result for such selections as id, all.
+ * A case with an empty output and a specific result is checked.
+ */
 class Sql2oFilmRepositoryTest {
     private static Sql2oFilmRepository filmRepo;
 
@@ -32,7 +36,7 @@ class Sql2oFilmRepositoryTest {
     }
 
     @Test
-    public void whenFindByReturnFilm() {
+    public void whenFindByIdReturnSameFilm() {
         var expectedFilm = new Film(1, "Wonder Women",
                 "When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian"
                         + " warrior in training, leaves home to fight a war, discovering her full powers and true"
@@ -42,7 +46,7 @@ class Sql2oFilmRepositoryTest {
     }
 
     @Test
-    public void whenFindByReturnEmpty() {
+    public void whenFindByIdReturnEmpty() {
         assertThat(filmRepo.findById(-1)).isEqualTo(empty());
     }
 

@@ -11,6 +11,10 @@ import java.util.Properties;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * In tests, checks are made to return the result for such samples as id, all.
+ * A case with an empty output and a specific result is checked.
+ */
 class Sql2oHallRepositoryTest {
     private static Sql2oHallRepository hallRepo;
 
@@ -32,7 +36,7 @@ class Sql2oHallRepositoryTest {
     }
 
     @Test
-    public void whenFindByReturnHall() {
+    public void whenFindByIdReturnSameHall() {
         var expected = new Hall(2, "Hall 2", 20, 10,
                 "Large room with seats made of soft and comfortable upholstery.");
         var actual = hallRepo.findById(2).get();
@@ -40,12 +44,12 @@ class Sql2oHallRepositoryTest {
     }
 
     @Test
-    public void whenFindByReturnEmpty() {
+    public void whenFindByIdReturnEmpty() {
         assertThat(hallRepo.findById(-1)).isEqualTo(empty());
     }
 
     @Test
-    public void whenGetAll() {
+    public void whenGetAllThenCheckSizeRslList() {
         assertThat(hallRepo.getAll().size()).isEqualTo(3);
         assertThat(hallRepo.findById(1).get().getName()).isEqualTo("Hall 1");
         assertThat(hallRepo.findById(3).get().getName()).isEqualTo("Vip room");

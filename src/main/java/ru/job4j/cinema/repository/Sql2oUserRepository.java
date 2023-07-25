@@ -51,7 +51,7 @@ public class Sql2oUserRepository implements UserRepository {
         }
     }
 
-    public boolean deleteById(int id) {
+    public boolean delete(int id) {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("DELETE FROM users WHERE id = :id");
             query.addParameter("id", id);
@@ -69,7 +69,7 @@ public class Sql2oUserRepository implements UserRepository {
         }
     }
 
-    public Collection<User> findAll() {
+    public Collection<User> getAll() {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM users");
             return query.setColumnMappings(User.COLUMN_MAPPING).executeAndFetch(User.class);

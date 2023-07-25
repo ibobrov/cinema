@@ -9,7 +9,7 @@ public interface TicketRepository {
 
     Optional<Ticket> save(Ticket ticket);
 
-    Optional<Ticket> getById(int id);
+    Optional<Ticket> findById(int id);
 
     List<Ticket> findBySession(int sessionId);
 }
