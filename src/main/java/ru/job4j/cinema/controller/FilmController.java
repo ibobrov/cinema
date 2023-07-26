@@ -9,17 +9,18 @@ import ru.job4j.cinema.dto.DtoFilmSession;
 import ru.job4j.cinema.service.FilmPreviewService;
 import ru.job4j.cinema.service.FilmSessionService;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 @Controller
 @RequestMapping("/films")
 public class FilmController {
     private final FilmPreviewService filmPreviewService;
-    private final FilmSessionService sessionRepo;
+    private final FilmSessionService sessionService;
 
-    public FilmController(FilmPreviewService filmPreviewService, FilmSessionService sessionRepo) {
+    public FilmController(FilmPreviewService filmPreviewService, FilmSessionService sessionService) {
         this.filmPreviewService = filmPreviewService;
-        this.sessionRepo = sessionRepo;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/list")
@@ -29,10 +30,15 @@ public class FilmController {
     }
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
-        model.addAttribute("film", filmPreviewService.findById(id).get());
-        var sessions = sessionRepo.findByFilm(id);
-        sessions.sort(Comparator.comparing(DtoFilmSession::getStartTime));
+    public String findById(Model model, @PathVariable int id) {
+        var preview = filmPreviewService.findById(id);
+        if (preview.isEmpty()) {
+            return "errors/error-404";
+        }
+        model.addAttribute("film", preview.get());
+        var sessions = sessionService.findByFilm(id);
+        var sessionCopies = new ArrayList<>(sessions);
+        sessionCopies.sort(Comparator.comparing(DtoFilmSession::getStartTime));
         model.addAttribute("filmSessions", sessions);
         return "films/one";
     }

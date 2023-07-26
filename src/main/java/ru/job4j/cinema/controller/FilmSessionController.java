@@ -11,7 +11,9 @@ import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.TicketService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Controller
@@ -29,28 +31,29 @@ public class FilmSessionController {
 
     @GetMapping("/list")
     public String getAll(Model model) {
-        var today = sessionService.findByDay(TODAY);
-        today.sort(Comparator.comparing(DtoFilmSession::getStartTime));
-        model.addAttribute("todaySessions", today);
-        var tomorrow = sessionService.findByDay(TOMORROW);
-        tomorrow.sort(Comparator.comparing(DtoFilmSession::getStartTime));
-        model.addAttribute("tomorrowSessions", tomorrow);
+        var todaySessions = sort(sessionService.findByDay(TODAY));
+        var tomorrowSessions = sort(sessionService.findByDay(TOMORROW));
+        model.addAttribute("todaySessions", todaySessions);
+        model.addAttribute("tomorrowSessions", tomorrowSessions);
         return "sessions/list";
     }
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
-        var filmSessionDto = sessionService.findById(id).get();
-        var hall = filmSessionDto.getHall();
+    public String findById(Model model, @PathVariable int id) {
+        var filmSessionDto = sessionService.findById(id);
+        if (filmSessionDto.isEmpty()) {
+            return "errors/error-404";
+        }
+        var hall = filmSessionDto.get().getHall();
         model.addAttribute("rows", IntStream.range(1, hall.getRowCount() + 1).toArray());
         model.addAttribute("places", IntStream.range(1, hall.getPlaceCount() + 1).toArray());
-        model.addAttribute("filmSession", filmSessionDto);
-        model.addAttribute("schema", createSchema(hall, filmSessionDto.getId()));
+        model.addAttribute("filmSession", filmSessionDto.get());
+        model.addAttribute("schema", createSchema(hall, filmSessionDto.get().getId()));
         return "sessions/one";
     }
 
     @PostMapping("/bye")
-    public String bayTicket(@ModelAttribute Ticket ticket, Model model) {
+    public String bayTicket(Model model, @ModelAttribute Ticket ticket) {
         var optionalTicket = ticketService.save(ticket);
         if (optionalTicket.isEmpty()) {
             model.addAttribute("message", "Failed to place an order. "
@@ -68,5 +71,11 @@ public class FilmSessionController {
             schema.setValue(ticket.getRowNumber(), ticket.getPlaceNumber(), true);
         }
         return schema;
+    }
+
+    private List<DtoFilmSession> sort(List<DtoFilmSession> list) {
+        var copySessions = new ArrayList<>(list);
+        copySessions.sort(Comparator.comparing(DtoFilmSession::getStartTime));
+        return copySessions;
     }
 }
