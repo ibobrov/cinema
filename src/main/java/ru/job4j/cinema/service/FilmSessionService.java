@@ -10,7 +10,7 @@ public interface FilmSessionService {
 
     Optional<DtoFilmSession> findById(int id);
 
-    List<DtoFilmSession> getByDay(LocalDate date);
+    List<DtoFilmSession> findByDay(LocalDate date);
 
-    List<DtoFilmSession> getByFilm(int id);
+    List<DtoFilmSession> findByFilm(int id);
 }

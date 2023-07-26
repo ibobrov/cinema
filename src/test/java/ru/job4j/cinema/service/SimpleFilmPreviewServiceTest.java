@@ -15,6 +15,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * The base behavior is checked and an empty result is returned.
+ * Upon request, the service returns genres, searches by id,
+ */
 class SimpleFilmPreviewServiceTest {
     private static FilmRepository filmRepo;
     private static GenreRepository genreRepo;

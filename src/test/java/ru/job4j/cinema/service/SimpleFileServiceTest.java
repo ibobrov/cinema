@@ -14,6 +14,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * The base behavior is checked. Upon request, the service finds
+ * the file and transfers data byte by byte.
+ */
 class SimpleFileServiceTest {
     private static FileRepository fileRepo;
     private static SimpleFileService fileService;

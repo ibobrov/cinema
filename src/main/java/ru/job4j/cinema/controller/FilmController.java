@@ -31,7 +31,7 @@ public class FilmController {
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
         model.addAttribute("film", filmPreviewService.findById(id).get());
-        var sessions = sessionRepo.getByFilm(id);
+        var sessions = sessionRepo.findByFilm(id);
         sessions.sort(Comparator.comparing(DtoFilmSession::getStartTime));
         model.addAttribute("filmSessions", sessions);
         return "films/one";
