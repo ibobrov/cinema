@@ -37,7 +37,7 @@ class Sql2oHallRepositoryTest {
 
     @Test
     public void whenFindByIdReturnSameHall() {
-        var expected = new Hall(2, "Hall 2", 20, 10,
+        var expected = new Hall(2, "Hall 2", 10, 20,
                 "Large room with seats made of soft and comfortable upholstery.");
         var actual = hallRepo.findById(2).get();
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
