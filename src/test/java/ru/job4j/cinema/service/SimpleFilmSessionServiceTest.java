@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -78,5 +79,18 @@ class SimpleFilmSessionServiceTest {
         assertThat(listActualDto.size()).isEqualTo(1);
         assertThat(listActualDto.get(0).getFilm()).isEqualTo(FILM);
         assertThat(listActualDto.get(0).getHall()).isEqualTo(HALL);
+    }
+
+    @Test
+    public void whenFindByIdTrowIllegalStateThenCatchIt() {
+        var thrown = catchThrowable(() -> {
+            when(sessionRepo.findByFilm(1)).thenReturn(List.of(SESSION));
+            when(filmRepo.findById(1)).thenReturn(empty());
+            when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
+            var listActualDto = sessionService.findByFilm(1);
+        });
+        assertThat(thrown).isInstanceOf(IllegalStateException.class);
+        var msg = "No such object by id. FilmSession id = -1, Film id = 1, Hall id = 1.";
+        assertThat(thrown.getMessage()).isEqualTo(msg);
     }
 }

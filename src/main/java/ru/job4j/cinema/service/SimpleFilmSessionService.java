@@ -1,7 +1,6 @@
 package ru.job4j.cinema.service;
 
 import org.springframework.stereotype.Service;
-import ru.job4j.cinema.common.RelationIdException;
 import ru.job4j.cinema.dto.DtoFilmSession;
 import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.repository.FilmRepository;
@@ -9,9 +8,10 @@ import ru.job4j.cinema.repository.HallRepository;
 import ru.job4j.cinema.repository.SessionRepository;
 
 import java.time.LocalDate;
-import java.util.*;
-
-import static java.util.Optional.empty;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SimpleFilmSessionService implements FilmSessionService {
@@ -28,12 +28,7 @@ public class SimpleFilmSessionService implements FilmSessionService {
     @Override
     public Optional<DtoFilmSession> findById(int id) {
         var sessionOpt = sessionRepo.findById(id);
-        try {
-            return sessionOpt.isPresent() ? Optional.of(toDto(sessionOpt.get())) : empty();
-        } catch (RelationIdException e) {
-            e.printStackTrace();
-            return empty();
-        }
+        return sessionOpt.map(this::toDto);
     }
 
     @Override
@@ -51,23 +46,19 @@ public class SimpleFilmSessionService implements FilmSessionService {
     private List<DtoFilmSession> toDto(Collection<FilmSession> filmSessions) {
         List<DtoFilmSession> rsl = new ArrayList<>();
         for (var session : filmSessions) {
-            try {
-                rsl.add(toDto(session));
-            } catch (RelationIdException e) {
-                e.printStackTrace();
-            }
+            rsl.add(toDto(session));
         }
         return rsl;
     }
 
-    private DtoFilmSession toDto(FilmSession session) throws RelationIdException {
+    private DtoFilmSession toDto(FilmSession session) {
         var film = filmRepo.findById(session.getFilmId());
         var hall = hallRepo.findById(session.getHallId());
         if (film.isEmpty() || hall.isEmpty()) {
-            var msg = String.format("No link found when converting FilmSession to DtoFilmSession. "
-                                    + "FilmSession id = %s, Film id = %s, Hall id = %s.",
-                                    session.getId(), session.getFilmId(), session.getHallId());
-            throw new RelationIdException(msg);
+            var pattern = "No such object by id. FilmSession id = %s, Film id = %s, Hall id = %s.";
+            var msg = String.format(pattern, session.getId(),
+                                    session.getFilmId(), session.getHallId());
+            throw new IllegalStateException(msg);
         }
         return new DtoFilmSession(session.getId(), film.get(), hall.get(),
                         session.getStartTime(), session.getEndTime(), session.getPrice());
