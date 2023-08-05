@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import ru.job4j.cinema.dto.DtoFilmSession;
 import ru.job4j.cinema.dto.HallSchema;
 import ru.job4j.cinema.model.Hall;
-import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.TicketService;
 
@@ -56,20 +55,5 @@ class FilmSessionControllerTest {
     public void whenFindByIdThenReturn404ErrorPageWith() {
         when(sessionService.findById(1)).thenReturn(empty());
         assertThat(controller.findById(model, 1)).isEqualTo("errors/error-404");
-    }
-
-    @Test
-    public void whenBayTicketThenReturnPaidPage() {
-        var ticket = new Ticket();
-        when(ticketService.save(any())).thenReturn(Optional.of(ticket));
-        assertThat(controller.bayTicket(model, ticket)).isEqualTo("sessions/paid");
-    }
-
-    @Test
-    public void whenBayTicketThenReturnErrorPage() {
-        when(ticketService.save(any())).thenReturn(empty());
-        var msg = "Failed to place an order. Refresh the ticket purchase page, the seat may be full.";
-        assertThat(controller.bayTicket(model, new Ticket())).isEqualTo("errors/error");
-        assertThat(model.getAttribute("message")).isEqualTo(msg);
     }
 }

@@ -49,6 +49,19 @@ class Sql2oHallRepositoryTest {
     }
 
     @Test
+    public void whenFindBySessionReturnSameHall() {
+        var expected = new Hall(2, "Hall 2", 10, 20,
+                "Large room with seats made of soft and comfortable upholstery.");
+        var actual = hallRepo.findBySession(7).get();
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    public void whenFindBySessionReturnEmpty() {
+        assertThat(hallRepo.findBySession(-1)).isEqualTo(empty());
+    }
+
+    @Test
     public void whenGetAllThenCheckSizeRslList() {
         assertThat(hallRepo.getAll().size()).isEqualTo(3);
         assertThat(hallRepo.findById(1).get().getName()).isEqualTo("Hall 1");

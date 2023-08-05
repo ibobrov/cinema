@@ -2,11 +2,12 @@ package ru.job4j.cinema.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.job4j.cinema.dto.DtoFilmSession;
 import ru.job4j.cinema.dto.HallSchema;
 import ru.job4j.cinema.model.Hall;
-import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.TicketService;
 
@@ -50,17 +51,6 @@ public class FilmSessionController {
         model.addAttribute("filmSession", filmSessionDto.get());
         model.addAttribute("schema", createSchema(hall, filmSessionDto.get().getId()));
         return "sessions/one";
-    }
-
-    @PostMapping("/bye")
-    public String bayTicket(Model model, @ModelAttribute Ticket ticket) {
-        var optionalTicket = ticketService.save(ticket);
-        if (optionalTicket.isEmpty()) {
-            model.addAttribute("message", "Failed to place an order. "
-                    + "Refresh the ticket purchase page, the seat may be full.");
-            return "errors/error";
-        }
-        return "sessions/paid";
     }
 
     private HallSchema createSchema(Hall hall, int sessionId) {

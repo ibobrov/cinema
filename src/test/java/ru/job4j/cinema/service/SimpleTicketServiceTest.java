@@ -6,7 +6,6 @@ import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.model.Hall;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.repository.HallRepository;
-import ru.job4j.cinema.repository.SessionRepository;
 import ru.job4j.cinema.repository.TicketRepository;
 
 import java.time.LocalDateTime;
@@ -28,7 +27,6 @@ class SimpleTicketServiceTest {
     private static SimpleTicketService ticketService;
     private static TicketRepository ticketRepo;
     private static HallRepository hallRepo;
-    private static SessionRepository sessionRepo;
     private static final Ticket TICKET = new Ticket(1, 1, 1, 1, 1);
     private static final FilmSession SESSION = new FilmSession(1, 1, 1, LocalDateTime.now(), LocalDateTime.now(), 5);
     private static final Hall HALL = new Hall(1, "", 5, 5, "");
@@ -37,38 +35,26 @@ class SimpleTicketServiceTest {
     public void initServices() {
         ticketRepo = mock(TicketRepository.class);
         hallRepo = mock(HallRepository.class);
-        sessionRepo = mock(SessionRepository.class);
-        ticketService = new SimpleTicketService(ticketRepo, hallRepo, sessionRepo);
+        ticketService = new SimpleTicketService(ticketRepo, hallRepo);
     }
 
     @Test
     public void whenSaveTicketThenReturnSameTicket() {
-        when(sessionRepo.findById(1)).thenReturn(Optional.of(SESSION));
-        when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
+        when(hallRepo.findBySession(1)).thenReturn(Optional.of(HALL));
         when(ticketRepo.save(any())).thenReturn(Optional.of(TICKET));
         assertThat(ticketService.save(TICKET).get()).isEqualTo(TICKET);
     }
 
     @Test
-    public void whenSaveTicketWithIncorrectSessionIdThenReturnEmpty() {
-        when(sessionRepo.findById(1)).thenReturn(empty());
-        when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
-        when(ticketRepo.save(any())).thenReturn(Optional.of(TICKET));
-        assertThat(ticketService.save(TICKET)).isEqualTo(empty());
-    }
-
-    @Test
     public void whenSaveTicketWithIncorrectHallIdThenReturnEmpty() {
-        when(sessionRepo.findById(1)).thenReturn(Optional.of(SESSION));
-        when(hallRepo.findById(1)).thenReturn(empty());
+        when(hallRepo.findBySession(1)).thenReturn(empty());
         when(ticketRepo.save(any())).thenReturn(Optional.of(TICKET));
         assertThat(ticketService.save(TICKET)).isEqualTo(empty());
     }
 
     @Test
     public void whenSaveTicketWithIncorrectTicketIdThenReturnEmpty() {
-        when(sessionRepo.findById(1)).thenReturn(Optional.of(SESSION));
-        when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
+        when(hallRepo.findBySession(1)).thenReturn(Optional.of(HALL));
         when(ticketRepo.save(any())).thenReturn(empty());
         assertThat(ticketService.save(TICKET)).isEqualTo(empty());
     }
@@ -76,8 +62,7 @@ class SimpleTicketServiceTest {
     @Test
     public void whenSaveTicketWithIncorrectRowInTheTicketThenReturnEmpty() {
         var ticketIncRow = new Ticket(1, 1, 10, 1, 1);
-        when(sessionRepo.findById(1)).thenReturn(Optional.of(SESSION));
-        when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
+        when(hallRepo.findBySession(1)).thenReturn(Optional.of(HALL));
         when(ticketRepo.save(any())).thenReturn(Optional.of(TICKET));
         assertThat(ticketService.save(ticketIncRow)).isEqualTo(empty());
     }
@@ -85,8 +70,7 @@ class SimpleTicketServiceTest {
     @Test
     public void whenSaveTicketWithIncorrectSeatInTheTicketThenReturnEmpty() {
         var ticketIncSeat = new Ticket(1, 1, 1, 10, 1);
-        when(sessionRepo.findById(1)).thenReturn(Optional.of(SESSION));
-        when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
+        when(hallRepo.findBySession(1)).thenReturn(Optional.of(HALL));
         when(ticketRepo.save(any())).thenReturn(Optional.of(TICKET));
         assertThat(ticketService.save(ticketIncSeat)).isEqualTo(empty());
     }

@@ -14,6 +14,10 @@ public class SimpleUserService implements UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * For security purposes, the data from the request is validated against.
+     * Do not think that the data from the http request will be correct.
+     */
     @Override
     public Optional<User> save(User user) {
         if ("".equals(user.getFullName())

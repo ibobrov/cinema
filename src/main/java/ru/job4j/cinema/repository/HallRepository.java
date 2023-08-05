@@ -9,5 +9,7 @@ public interface HallRepository {
 
     Optional<Hall> findById(int id);
 
+    Optional<Hall> findBySession(int id);
+
     List<Hall> getAll();
 }

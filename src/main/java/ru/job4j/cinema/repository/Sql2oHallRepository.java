@@ -31,6 +31,23 @@ public class Sql2oHallRepository implements HallRepository {
         }
     }
 
+    public Optional<Hall> findBySession(int id) {
+        try (var connection = sql2o.open()) {
+            var sql = """
+                      SELECT h.*
+                      FROM film_sessions AS s
+                          INNER JOIN halls AS h
+                              ON s.halls_id = h.id
+                      WHERE s.id = :id;
+                      """;
+            var query = connection.createQuery(sql);
+            query.addParameter("id", id);
+            var hall = query.setColumnMappings(Hall.COLUMN_MAPPING)
+                    .executeAndFetchFirst(Hall.class);
+            return Optional.ofNullable(hall);
+        }
+    }
+
     @Override
     public List<Hall> getAll() {
         try (var connection = sql2o.open()) {

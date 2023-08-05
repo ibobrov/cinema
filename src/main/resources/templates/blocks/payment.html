@@ -1,5 +1,5 @@
 <div th:fragment="payment">
-  <form th:action="@{/sessions/bye}" method="post">
+  <form th:action="@{/tickets/buy}" method="post">
     <input type="hidden" name="sessionId" th:value="${filmSession.getId()}">
     <input type="hidden" name="userId" th:value="${user.id}">
 
