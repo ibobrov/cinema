@@ -1,7 +1,6 @@
 package ru.job4j.cinema.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,14 +13,14 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     public String renderErrorPage(HttpServletRequest request) {
         var status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        var statusCode = 0;
         if (status != null) {
-            var statusCode = Integer.parseInt(status.toString());
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "errors/error-404";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "errors/error-500";
-            }
+            statusCode = Integer.parseInt(status.toString());
         }
-        return "errors/error";
+        return switch (statusCode) {
+            case 404 -> "errors/error-404";
+            case 500 -> "errors/error-500";
+            default -> "errors/error";
+        };
     }
 }
