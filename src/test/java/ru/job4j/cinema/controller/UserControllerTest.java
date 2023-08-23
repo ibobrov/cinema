@@ -53,6 +53,13 @@ class UserControllerTest {
     }
 
     @Test
+    public void whenTryRegisterAndRedirectToIndexNotExistUserThenRedirectToRegisterAgain() {
+        when(userService.save(any())).thenReturn(empty());
+        var view = userController.registerRedirect("", user, model, session);
+        assertThat(view).isEqualTo("users/register");
+    }
+
+    @Test
     public void whenGetLoginPageThenGetThisPage() {
         assertThat(userController.getLoginPage()).isEqualTo("users/login");
     }
@@ -80,6 +87,13 @@ class UserControllerTest {
         var view = userController.loginUserRedirect("/user/login", user, model, session);
         verify(session).setAttribute("user", user);
         assertThat(view).isEqualTo("redirect:/");
+    }
+
+    @Test
+    public void whenTryLoginAndRedirectToIndexNotExistUserThenRedirectToLoginAgain() {
+        when(userService.findByEmailAndPassword(any(), any())).thenReturn(empty());
+        var view = userController.loginUserRedirect("/user/login", user, model, session);
+        assertThat(view).isEqualTo("users/login");
     }
 
     @Test
