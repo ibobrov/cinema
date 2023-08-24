@@ -1,6 +1,5 @@
 package ru.job4j.cinema.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.repository.FileRepository;
 
@@ -19,14 +18,8 @@ import static org.mockito.Mockito.when;
  * the file and transfers data byte by byte.
  */
 class SimpleFileServiceTest {
-    private static FileRepository fileRepo;
-    private static SimpleFileService fileService;
-
-    @BeforeEach
-    public void initRepo() {
-        fileRepo = mock(FileRepository.class);
-        fileService = new SimpleFileService(fileRepo);
-    }
+    private final FileRepository fileRepo = mock(FileRepository.class);
+    private final SimpleFileService fileService = new SimpleFileService(fileRepo);
 
     @Test
     public void whenGetFileByIdWhenReturnCorrectedDto() throws IOException {

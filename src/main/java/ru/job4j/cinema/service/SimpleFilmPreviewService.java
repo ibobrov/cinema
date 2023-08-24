@@ -21,14 +21,14 @@ public class SimpleFilmPreviewService implements FilmPreviewService {
 
     @Override
     public Optional<FilmPreview> findById(int id) {
-        Optional<Film> film = filmRepository.findById(id);
+        var film = filmRepository.findById(id);
         return film.map(value -> toPreview(value, getGenre(value.getGenreId())));
     }
 
     @Override
     public List<FilmPreview> getAll() {
-        List<FilmPreview> rsl = new ArrayList<>();
-        Map<Integer, String> genres = getAllGenre();
+        var rsl = new ArrayList<FilmPreview>();
+        var genres = getAllGenre();
         for (var film : filmRepository.getAll()) {
             rsl.add(toPreview(film, genres.get(film.getGenreId())));
         }
@@ -41,12 +41,12 @@ public class SimpleFilmPreviewService implements FilmPreviewService {
     }
 
     private String getGenre(int id) {
-        Optional<Genre> genre = genreRepository.findById(id);
+        var genre = genreRepository.findById(id);
         return genre.isPresent() ? genre.get().getName() : "";
     }
 
     private Map<Integer, String> getAllGenre() {
-        HashMap<Integer, String> rsl = new HashMap<>();
+        var rsl = new HashMap<Integer, String>();
         for (Genre genre : genreRepository.getAll()) {
             rsl.put(genre.getId(), genre.getName());
         }

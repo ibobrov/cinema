@@ -1,6 +1,5 @@
 package ru.job4j.cinema.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.model.Film;
 import ru.job4j.cinema.model.Genre;
@@ -20,16 +19,9 @@ import static org.mockito.Mockito.when;
  * Upon request, the service returns genres, searches by id,
  */
 class SimpleFilmPreviewServiceTest {
-    private static FilmRepository filmRepo;
-    private static GenreRepository genreRepo;
-    private static SimpleFilmPreviewService previewService;
-
-    @BeforeEach
-    public void mockedRepo() {
-        filmRepo = mock(FilmRepository.class);
-        genreRepo = mock(GenreRepository.class);
-        previewService = new SimpleFilmPreviewService(filmRepo, genreRepo);
-    }
+    private final FilmRepository filmRepo = mock(FilmRepository.class);
+    private final GenreRepository genreRepo = mock(GenreRepository.class);
+    private final SimpleFilmPreviewService previewService = new SimpleFilmPreviewService(filmRepo, genreRepo);
 
     @Test
     public void whenFindByOneThenGetOne() {

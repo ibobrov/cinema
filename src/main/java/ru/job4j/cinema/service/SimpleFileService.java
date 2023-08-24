@@ -35,7 +35,6 @@ public class SimpleFileService implements FileService {
         try {
             return Files.readAllBytes(Path.of(path));
         } catch (IOException e) {
-            logger.trace(e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }

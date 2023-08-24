@@ -1,13 +1,8 @@
 package ru.job4j.cinema.repository;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.User;
-
-import java.io.IOException;
-import java.util.Properties;
 
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -18,24 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * It also checks to save instances with the same mail.
  */
 class Sql2oUserRepositoryTest {
-    private static Sql2oUserRepository userRepo;
-
-    @BeforeAll
-    public static void initRepository() throws IOException {
-        var properties = new Properties();
-        try (var inputStream = Sql2oHallRepositoryTest.class.getClassLoader()
-                .getResourceAsStream("connection.properties")) {
-            properties.load(inputStream);
-        }
-        var configuration = new DatasourceConfiguration();
-        var datasource = configuration.connectionPool(
-                properties.getProperty("datasource.url"),
-                properties.getProperty("datasource.username"),
-                properties.getProperty("datasource.password")
-        );
-        var sql2o = configuration.databaseClient(datasource);
-        userRepo = new Sql2oUserRepository(sql2o);
-    }
+    private final Sql2oUserRepository userRepo = new Sql2oUserRepository(ConfigLouder.getSql2o());
 
     @AfterEach
     public void cleanRepo() {

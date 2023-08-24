@@ -1,14 +1,10 @@
 package ru.job4j.cinema.repository;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.FilmSession;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Properties;
 
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -18,26 +14,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * The case with an empty output and a specific result is checked.
  */
 class Sql2oSessionRepositoryTest {
-    private static Sql2oSessionRepository sessionRepo;
+    private final Sql2oSessionRepository sessionRepo = new Sql2oSessionRepository(ConfigLouder.getSql2o());
     private final static FilmSession FILM_SESSION_4 = new FilmSession(4);
     private final static FilmSession FILM_SESSION_20 = new FilmSession(20);
-
-    @BeforeAll
-    public static void initRepository() throws IOException {
-        var properties = new Properties();
-        try (var inputStream = Sql2oHallRepositoryTest.class.getClassLoader()
-                .getResourceAsStream("connection.properties")) {
-            properties.load(inputStream);
-        }
-        var configuration = new DatasourceConfiguration();
-        var datasource = configuration.connectionPool(
-                properties.getProperty("datasource.url"),
-                properties.getProperty("datasource.username"),
-                properties.getProperty("datasource.password")
-        );
-        var sql2o = configuration.databaseClient(datasource);
-        sessionRepo = new Sql2oSessionRepository(sql2o);
-    }
 
     @Test
     public void whenFindByIdReturnSameFilmSession() {

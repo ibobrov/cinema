@@ -1,12 +1,7 @@
 package ru.job4j.cinema.repository;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.Genre;
-
-import java.io.IOException;
-import java.util.Properties;
 
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -16,24 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * A case with an empty output and a specific result is checked.
  */
 class Sql2oGenreRepositoryTest {
-    private static Sql2oGenreRepository genreRepo;
-
-    @BeforeAll
-    public static void initRepository() throws IOException {
-        var properties = new Properties();
-        try (var inputStream = Sql2oHallRepositoryTest.class.getClassLoader().
-                getResourceAsStream("connection.properties")) {
-            properties.load(inputStream);
-        }
-        var configuration = new DatasourceConfiguration();
-        var datasource = configuration.connectionPool(
-                properties.getProperty("datasource.url"),
-                properties.getProperty("datasource.username"),
-                properties.getProperty("datasource.password")
-        );
-        var sql2o = configuration.databaseClient(datasource);
-        genreRepo = new Sql2oGenreRepository(sql2o);
-    }
+    private final Sql2oGenreRepository genreRepo = new Sql2oGenreRepository(ConfigLouder.getSql2o());
 
     @Test
     public void whenFindByIdReturnSameGenre() {

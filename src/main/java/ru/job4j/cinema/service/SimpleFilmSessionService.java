@@ -44,7 +44,7 @@ public class SimpleFilmSessionService implements FilmSessionService {
     }
 
     private List<DtoFilmSession> toDto(Collection<FilmSession> filmSessions) {
-        List<DtoFilmSession> rsl = new ArrayList<>();
+        var rsl = new ArrayList<DtoFilmSession>();
         for (var session : filmSessions) {
             rsl.add(toDto(session));
         }

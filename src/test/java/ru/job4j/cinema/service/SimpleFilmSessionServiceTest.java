@@ -1,6 +1,5 @@
 package ru.job4j.cinema.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.model.Film;
 import ru.job4j.cinema.model.FilmSession;
@@ -25,22 +24,14 @@ import static org.mockito.Mockito.when;
  * It is checked that one dto is collected from several repositories for certain id.
  */
 class SimpleFilmSessionServiceTest {
-    private static SimpleFilmSessionService sessionService;
-    private static SessionRepository sessionRepo;
-    private static FilmRepository filmRepo;
-    private static HallRepository hallRepo;
+    private final SessionRepository sessionRepo = mock(SessionRepository.class);
+    private final FilmRepository filmRepo = mock(FilmRepository.class);
+    private final HallRepository hallRepo = mock(HallRepository.class);
+    private final SimpleFilmSessionService sessionService = new SimpleFilmSessionService(sessionRepo, filmRepo, hallRepo);
     private static final FilmSession SESSION = new FilmSession(-1, 1, 1,
             LocalDateTime.now(), LocalDateTime.now(), 10);
     private static final Film FILM = new Film();
     private static final Hall HALL = new Hall();
-
-    @BeforeEach
-    public void initServices() {
-        sessionRepo = mock(SessionRepository.class);
-        filmRepo = mock(FilmRepository.class);
-        hallRepo = mock(HallRepository.class);
-        sessionService = new SimpleFilmSessionService(sessionRepo, filmRepo, hallRepo);
-    }
 
     @Test
     public void whenFindByIdThenReturnDto() {
@@ -87,7 +78,7 @@ class SimpleFilmSessionServiceTest {
             when(sessionRepo.findByFilm(1)).thenReturn(List.of(SESSION));
             when(filmRepo.findById(1)).thenReturn(empty());
             when(hallRepo.findById(1)).thenReturn(Optional.of(HALL));
-            var listActualDto = sessionService.findByFilm(1);
+            sessionService.findByFilm(1);
         });
         assertThat(thrown).isInstanceOf(IllegalStateException.class);
         var msg = "No such object by id. FilmSession id = -1, Film id = 1, Hall id = 1.";

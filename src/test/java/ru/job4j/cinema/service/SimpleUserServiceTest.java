@@ -1,6 +1,5 @@
 package ru.job4j.cinema.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.repository.UserRepository;
@@ -17,14 +16,8 @@ import static org.mockito.Mockito.when;
  * It checks the creation of unique users and their search.
  */
 class SimpleUserServiceTest {
-    private static UserRepository userRepository;
-    private static SimpleUserService userService;
-
-    @BeforeEach
-    public void initServices() {
-        userRepository = mock(UserRepository.class);
-        userService = new SimpleUserService(userRepository);
-    }
+    private final UserRepository userRepository = mock(UserRepository.class);
+    private final SimpleUserService userService = new SimpleUserService(userRepository);
 
     @Test
     public void whenSaveUserThenReturnSameUser() {

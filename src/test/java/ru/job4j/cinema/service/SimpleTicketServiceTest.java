@@ -1,14 +1,11 @@
 package ru.job4j.cinema.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.model.Hall;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.repository.HallRepository;
 import ru.job4j.cinema.repository.TicketRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,19 +21,11 @@ import static org.mockito.Mockito.when;
  * and that there will not be two tickets for one place.
  */
 class SimpleTicketServiceTest {
-    private static SimpleTicketService ticketService;
-    private static TicketRepository ticketRepo;
-    private static HallRepository hallRepo;
+    private final TicketRepository ticketRepo = mock(TicketRepository.class);
+    private final HallRepository hallRepo = mock(HallRepository.class);
+    private final SimpleTicketService ticketService = new SimpleTicketService(ticketRepo, hallRepo);
     private static final Ticket TICKET = new Ticket(1, 1, 1, 1, 1);
-    private static final FilmSession SESSION = new FilmSession(1, 1, 1, LocalDateTime.now(), LocalDateTime.now(), 5);
     private static final Hall HALL = new Hall(1, "", 5, 5, "");
-
-    @BeforeEach
-    public void initServices() {
-        ticketRepo = mock(TicketRepository.class);
-        hallRepo = mock(HallRepository.class);
-        ticketService = new SimpleTicketService(ticketRepo, hallRepo);
-    }
 
     @Test
     public void whenSaveTicketThenReturnSameTicket() {
