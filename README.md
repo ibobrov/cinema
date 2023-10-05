@@ -1,7 +1,7 @@
-# Cinema
-
 [![Java CI with Maven](https://github.com/ibobrov/cinema/actions/workflows/maven.yml/badge.svg)](https://github.com/ibobrov/cinema/actions/workflows/maven.yml)
 [![codecov](https://codecov.io/github/ibobrov/cinema/branch/master/graph/badge.svg?token=vbtl0z2UVA)](https://codecov.io/github/ibobrov/cinema)
+
+# Cinema
 
 The cinema is a web application with an emphasis on the server side of the site for purchasing cinema tickets.
 I wrote the layout adapted for phones and tablets. All layouts were used under a free license.
